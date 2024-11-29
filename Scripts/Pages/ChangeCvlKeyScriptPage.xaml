@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Controls.Helpers;assembly=Controls"
+             xmlns:controls="clr-namespace:Controls;assembly=Controls"
+             x:Class="Scripts.Pages.ChangeCvlKeyScriptPage"
+             xmlns:viewmodel="clr-namespace:Scripts.ViewModels"
+             x:DataType="viewmodel:ChangeCvlKeyScriptPageViewModel"
+             Title="ChangeCvlKeyScriptPage"
+             Shell.NavBarIsVisible="False">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False" IsEnabled="False"/>
+    </Shell.BackButtonBehavior>
+
+    <Grid RowDefinitions="45, *, 40, 40, 40, 50, 42, 30, Auto, *"
+          ColumnDefinitions=".25*, .25*, .25*, .25*"
+          RowSpacing="10"
+          ColumnSpacing="10">
+
+        <controls:TitleBar Grid.ColumnSpan="4"
+                           SettingsButtonVisible="False"
+                           ControlTemplate="{StaticResource TitleBarTemplate}"/>
+
+        <Label Text="Select environment"
+               Grid.Row="2"
+               Grid.Column="0"
+               VerticalOptions="Center"
+               HorizontalOptions="End"/>
+        <HorizontalStackLayout Grid.Row="2"
+                     Grid.Column="1"
+                     Grid.ColumnSpan="3"
+                     RadioButtonGroup.GroupName="Env"
+                     RadioButtonGroup.SelectedValue="{Binding EnvironmentSelect, Mode=TwoWay}">
+            <RadioButton GroupName="Env"
+                         Content="DEV"
+                         Value="DEV"/>
+            <RadioButton GroupName="Env"
+                         Content="TEST"
+                         Value="TEST"/>
+            <RadioButton GroupName="Env"
+                         Content="PROD"
+                         Value="PROD"/>
+        </HorizontalStackLayout>
+
+        <Label Text="CVL Id"
+               Grid.Row="3"
+               Grid.Column="0"
+               VerticalOptions="Center"
+               HorizontalOptions="End"/>
+        <Entry Placeholder=""
+               Text="{Binding CvlId}"
+               Grid.Row="3"
+               Grid.Column="1"
+               Grid.ColumnSpan="2"/>
+
+        <Label Text="CVL Key"
+               Grid.Row="4"
+               Grid.Column="0"
+               VerticalOptions="Center"
+               HorizontalOptions="End"/>
+        <Entry Placeholder="Old key"
+               Text="{Binding CvlKeyOld}"
+               Grid.Row="4"
+               Grid.Column="1"
+               Grid.ColumnSpan="1"/>
+        <Entry Placeholder="New key"
+               Text="{Binding CvlKeyNew}"
+               Grid.Row="4"
+               Grid.Column="2"
+               Grid.ColumnSpan="1"/>
+
+
+        <Button StyleClass="RedBtn"
+                Grid.Row="6"
+                Grid.Column="1"
+                Text="Cancel"
+                IsEnabled="{Binding IsNotProcessing}"
+                Command="{Binding CancelCommand}"
+                helpers:CursorBehavior.Cursor="Hand"/>
+        <Button StyleClass="RedBtn"
+                Grid.Row="6"
+                Grid.Column="2"
+                Text="Run script"
+                IsEnabled="{Binding IsNotProcessing}"
+                Command="{Binding RunScriptCommand}"
+                helpers:CursorBehavior.Cursor="Hand"/>
+
+        <ProgressBar Progress="{Binding ProgressValue}"
+                     ProgressColor="{DynamicResource GrodanGreen}"
+                     ScaleY="2.5"
+                     Grid.Row="7"
+                     Grid.Column="1"
+                     Grid.ColumnSpan="2"/>
+    </Grid>
+    
+</ContentPage>
